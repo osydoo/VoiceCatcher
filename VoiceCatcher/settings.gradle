@@ -1,0 +1,1 @@
+include ':app', ':Speech_library', ':gradle-wrapper'

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "537885995038",
+    "firebase_url": "https://mlkit-1e30e.firebaseio.com",
+    "project_id": "mlkit-1e30e",
+    "storage_bucket": "mlkit-1e30e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537885995038:android:09546560b4505797",
+        "android_client_info": {
+          "package_name": "com.google.ar.sceneform.samples.hellosceneform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537885995038-25vms4tqm1bd0fka3saj6qee7ud9hgmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.ar.sceneform.samples.hellosceneformt",
+            "certificate_hash": "4a6da1dcd739ffce8e0c152bdc85ad8445e7faea"
+          }
+        },
+        {
+          "client_id": "537885995038-imj66tdjegjfra6d8q4nud3dnn98rvbn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaIMaNqwrOpB9QmL8vcdN4TPR07_d0TYs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537885995038-imj66tdjegjfra6d8q4nud3dnn98rvbn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,137 @@
+/*
+ * Copyright 2018 Google LLC
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
+//compile 'com.google.cloud.android.speech:dev:1.0@aar'
+ext {
+    grpcVersion = '1.4.0'
+}
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.google.ar.sceneform.samples.hellosceneform"
+
+        // 24 is the minimum since ARCore only works with 24 and higher.
+        minSdkVersion 24
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        ndk {
+            /*
+             * Sceneform is available for the following ABIs: arm64-v8a, armv7a,
+             * x86_64 and x86. This sample app enables arm64-v8a to run on
+             * devices and x86 to run on the emulator. Your application should
+             * list the ABIs most appropriate to minimize APK size (arm64-v8a recommended).
+             */
+            abiFilters 'arm64-v8a', 'x86'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            multiDexEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+        }
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+                grpc {
+                    // Options added to --grpc_out
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.google.ar.sceneform:core:1.4.0'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.4.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    //implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
+    implementation project(':Speech_library')
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    // ML Kit dependencies
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-ml-common:16.1.2'
+    implementation 'com.google.firebase:firebase-ml-vision:17.0.0'
+    implementation 'com.google.firebase:firebase-ml-vision-image-label-model:15.0.0'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.0'
+
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+
+    //butterknife
+    implementation 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    // gRPC
+    implementation "io.grpc:grpc-okhttp:$grpcVersion"
+    //compile "io.grpc:grpc-protobuf-lite:$grpcVersion"
+    implementation "io.grpc:grpc-stub:$grpcVersion"
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+    protobuf 'com.google.protobuf:protobuf-java:3.3.1'
+    implementation 'com.google.api.grpc:grpc-google-cloud-speech-v1:0.1.13'
+    // OAuth2 for Google API
+    implementation('com.google.auth:google-auth-library-oauth2-http:0.7.0') {
+        exclude module: 'httpclient'
+    }
+    implementation 'com.android.support:multidex:1.0.0'
+    implementation project(':gradle-wrapper')
+}
+
+apply plugin: 'com.google.ar.sceneform.plugin'
+apply plugin: 'com.google.gms.google-services'
+
+sceneform.asset('sampledata/models/andy.obj',
+        'default',
+        'sampledata/models/andy.sfa',
+        'src/main/res/raw/andy')
+
+
+
+sceneform.asset('sampledata/Barrel obj.obj',
+        'default',
+        'sampledata/Barrel obj.sfa',
+        'src/main/assets/Barrel obj')
